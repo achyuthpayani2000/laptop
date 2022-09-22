@@ -1,0 +1,56 @@
+﻿@model WebApplication1.Models.Product
+@using WebApplication1.Helpers;
+@using Microsoft.AspNetCore.Http;
+@using WebApplication1.Models;
+
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <div class="card">
+        <div class="card-header">Product Details</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="@Model.Image" height="300" width="300" />
+                </div>
+                <div class="col-md-8">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>Product Id</th>
+                                <td>@Model.Id</td>
+                            </tr>
+                            <tr>
+                                <th>Product Name</th>
+                                <td>@Model.Name</td>
+                            </tr>
+                            <tr>
+                                <th>Product Price</th>
+                                <td>@Model.Price</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    @if (Context.Session.GetString("Role") == "admin")
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary m-1">Edit</a>
+                                    }
+                                    <a asp-action="Index" class="btn btn-outline-info">Back to List</a>
+                                    <a class="btn btn-sm btn-outline-secondary" asp-controller="Cart" asp-action="Buy" asp-route-id="@Model.Id">Add to Cart</a>
+                                    @*<a asp-action="" class="btn btn-secondary m-1">Add to Cart</a>*@
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

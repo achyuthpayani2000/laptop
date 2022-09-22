@@ -1,0 +1,70 @@
+﻿@model IEnumerable<WebApplication1.Models.Product>
+@using WebApplication1.Helpers;
+@using Microsoft.AspNetCore.Http;
+@using WebApplication1.Models;
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<p>
+    @if (Context.Session.GetString("Role") == "admin") {
+    <a asp-action="Create" class="btn btn-outline-success">ADD New</a>
+    }
+</p>
+<div class=" py-5 bg-light">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <img src="@item.Image" />
+                        <div class="card-body">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>Product Name</th>
+                                        <td>@item.Name</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Product Price</th>
+                                        <td>@item.Price</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    @if (Context.Session.GetString("Role") == "admin")
+                                    {
+                                        <a asp-action="Index" asp-controller="Home" class="btn btn-secondary">Back</a>
+                                    }
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
+                                    @if (Context.Session.GetString("Role") == "admin")
+                                    {
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                                    }
+                                <a class="btn btn-sm btn-outline-secondary" asp-controller="Cart" asp-action="Buy" asp-route-id="@item.Id">Add to Cart</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
